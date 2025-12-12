@@ -1,18 +1,30 @@
-# R
-.Rhistory
-.RData
-.Rproj.user
-
 # Daten
 data/raw/*
 data/processed/*.rds
 
-# Reports / Output
-report/*.html
-report/*.pdf
+# R / RStudio
+.Rproj.user/
+.Rhistory
+.Rapp.history
+.RData
+.RDataTmp
+*.Rproj
+
+# Positron
+air.toml
+*.toml
 
 # Shiny Logs
 app/*.log
 
-# VSCode / RStudio spezifisch
+# VSCode
 .vscode/
+
+# Reports / Output
+reports/*.pdf
+reports/*_files/
+
+# Quarto cache & temp files
+*_cache/
+.cache/
+.quarto/
