@@ -21,7 +21,7 @@ app/*.log
 .vscode/
 
 # Reports / Output
-reports/*.pdf
+# reports/*.pdf
 reports/*_files/
 
 # Quarto cache & temp files

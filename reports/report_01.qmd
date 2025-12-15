@@ -4,9 +4,11 @@ author: "Fabian Rüger"
 format:
   html:
     embed-resources: true
+    code-fold: true
+  pdf: default
 ---
 
-This report displays some **basic analyses** of the aviation wildlife dataset available at [Kaggle](https://www.kaggle.com/datasets/dianaddx/aircraft-wildlife-strikes-1990-2023/data). The dataset contains information about wildlife strikes with military, commercial or civil aircrafts from 1990 to 2023.
+This report presents some **basic analyses** of the aviation wildlife dataset available at [Kaggle](https://www.kaggle.com/datasets/dianaddx/aircraft-wildlife-strikes-1990-2023/data). The dataset contains information about wildlife strikes with military, commercial or civil aircrafts from 1990 to 2023.
 
 ```{r}
 #| label: load-packages
@@ -43,8 +45,8 @@ faa_wildlife |>
   group_by(incident_year) |>
   summarise(total_strikes = n(), .groups = "drop") |>
   ggplot(aes(x = incident_year, y = total_strikes)) +
-  geom_line() +
-  geom_point() +
+  geom_line(color = "#00688B") +
+  geom_point(color = "#00688B") +
   scale_x_continuous(breaks = seq(1990, 2023, by = 2)) +
   scale_y_continuous(
     breaks = seq(0, 17500, by = 2500),
@@ -55,6 +57,32 @@ faa_wildlife |>
     x = "Year",
     y = "Number of Strikes"
   ) +
-  theme_bw() +
-  theme(panel.grid.minor.y = element_blank())
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
+```
+
+@fig-wildlife-strikes-by-month shows the average number of wildlife strike incidents by month. There is a clear seasonal pattern, with the highest number of incidents occurring during the spring and summer months (April to August). This trend may be related to increased wildlife activity during these months, as well as higher air traffic volumes.
+
+```{r}
+#| label: fig-wildlife-strikes-by-month
+#| fig-cap: "Average Number of Wildlife Strike Incidents by Month"
+#| fig-width: 7
+#| fig-height: 4
+#| warning: false
+faa_wildlife |>
+  group_by(incident_month, incident_year) |>
+  summarise(n = n()) |>
+  summarise(mean_strikes = mean(n)) |>
+  ggplot(aes(x = incident_month, y = mean_strikes)) +
+  geom_line(color = "#00688B") +
+  geom_point(color = "#00688B") +
+  scale_x_continuous(breaks = 1:12, labels = month.abb) +
+  scale_y_continuous(labels = scales::label_number(big.mark = ",")) +
+  labs(
+    title = "Average Number of Wildlife Strike Incidents by Month",
+    x = "Month",
+    y = "Number of Strikes"
+  ) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
 ```

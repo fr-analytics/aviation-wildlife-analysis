@@ -20,8 +20,8 @@ faa_wildlife |>
   group_by(incident_year) |>
   summarise(total_strikes = n()) |>
   ggplot(aes(x = incident_year, y = total_strikes)) +
-  geom_line() +
-  geom_point() +
+  geom_line(color = "#00688B") +
+  geom_point(color = "#00688B") +
   scale_x_continuous(breaks = seq(1990, 2023, by = 2)) +
   scale_y_continuous(
     breaks = seq(0, 17500, by = 2500),
@@ -32,5 +32,23 @@ faa_wildlife |>
     x = "Year",
     y = "Number of Strikes"
   ) +
-  theme_bw() +
-  theme(panel.grid.minor.y = element_blank())
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
+
+# seasonal trend of wildlife strikes by month
+faa_wildlife |>
+  group_by(incident_month, incident_year) |>
+  summarise(n = n()) |>
+  summarise(mean_strikes = mean(n)) |>
+  ggplot(aes(x = incident_month, y = mean_strikes)) +
+  geom_line(color = "#00688B") +
+  geom_point(color = "#00688B") +
+  scale_x_continuous(breaks = 1:12, labels = month.abb) +
+  scale_y_continuous(labels = scales::label_number(big.mark = ",")) +
+  labs(
+    title = "Average Number of Wildlife Strike Incidents by Month",
+    x = "Month",
+    y = "Number of Strikes"
+  ) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
