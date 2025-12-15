@@ -6,24 +6,6 @@ Brief project description: Analysis of wildlife strikes on aircraft in the USA b
 
 ------------------------------------------------------------------------
 
-## Project Structure
-
--   `aviation-wildlife-analysis/`
-    -   `data/`
-        -   `raw/`
-        -   `processed/`
-    -   `scripts/`
-        -   `01_load_clean.R`
-        -   `02_eda.R`
-    -   `report/`
-        -   `report_01.qmd`
-        -   `report_01.html`
-    -   `README.md`
-    -   `.gitignore`
-    -   `LICENSE`
-
-------------------------------------------------------------------------
-
 ## Data Source
 
 -   Datensatz: [FAA Wildlife Strikes on Kaggle](https://www.kaggle.com/datasets/dianaddx/aircraft-wildlife-strikes-1990-2023/data)
@@ -40,10 +22,9 @@ Brief project description: Analysis of wildlife strikes on aircraft in the USA b
 
 ------------------------------------------------------------------------
 
-## Usage / Instructions
+## Project Summary
 
+See [here](https://fr-analytics.github.io/aviation-wildlife-analysis/) for a detailed summary of the analysis, findings, and visualizations.
 
 
 ------------------------------------------------------------------------
-
-## Examples / Screenshots
