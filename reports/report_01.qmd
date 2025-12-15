@@ -4,8 +4,10 @@ author: "Fabian Rüger"
 format:
   html:
     embed-resources: true
+    theme: cosmo
+    toc: true
+    number-sections: true
     code-fold: true
-  pdf: default
 ---
 
 This report presents some **basic analyses** of the aviation wildlife dataset available at [Kaggle](https://www.kaggle.com/datasets/dianaddx/aircraft-wildlife-strikes-1990-2023/data). The dataset contains information about wildlife strikes with military, commercial or civil aircrafts from 1990 to 2023.
