@@ -24,7 +24,7 @@ Brief project description: Analysis of wildlife strikes on aircraft in the USA b
 
 ## Project Summary
 
-See [here](https://fr-analytics.github.io/aviation-wildlife-analysis/) for a detailed summary of the analysis, findings, and visualizations.
+See [here](https://fr-analytics.github.io/aviation-wildlife-analysis/) for a summary of the analysis, findings, and visualizations.
 
 
 ------------------------------------------------------------------------

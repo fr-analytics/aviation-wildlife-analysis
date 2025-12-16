@@ -1,5 +1,5 @@
 ---
-title: "Aviation Wildlife Analysis"
+title: "Aviation Wildlife Strikes Analysis"
 author: "Fabian Rüger"
 format:
   html:
@@ -35,11 +35,10 @@ faa_wildlife <- janitor::clean_names(faa_wildlife)
 The dataset has `{r} ncol(faa_wildlife)` columns and `{r} nrow(faa_wildlife)` observations.
 
 ## Wildlife Strike Incidents Over Time
-@fig-wildlife-strikes-over-time shows a positive trend in the number of wildlife strike incidents over time. The number of reported incidents has generally increased from around 2,500 incidents in 1990 to over 15,000 incidents in recent years. This increase could be attributed to various factors such as improved reporting mechanisms, increased air traffic, or changes in wildlife populations near airports.
-
+@fig-wildlife-strikes-by-year shows a positive trend in the number of wildlife strike incidents over time. The number of reported incidents has generally increased from around 2,500 incidents in 1990 to over 15,000 incidents in recent years. This increase could be attributed to various factors such as improved reporting mechanisms, increased air traffic, or changes in wildlife populations near airports.
 
 ```{r}
-#| label: fig-wildlife-strikes-over-time
+#| label: fig-wildlife-strikes-by-year
 #| fig-cap: "Total Wildlife Strike Incidents per Year"
 #| fig-width: 7
 #| fig-height: 4
@@ -83,6 +82,40 @@ faa_wildlife |>
   labs(
     title = "Average Number of Wildlife Strike Incidents by Month",
     x = "Month",
+    y = "Number of Strikes"
+  ) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
+```
+
+## Taking a Closer Look at Wildlife Strikes
+The wildlife species involved in strikes are diverse, but a few species account for a significant portion of the incidents. @fig-wildlife-strikes-by-species highlights the top species responsible for about 75% of wildlife strike incidents. Birds such as gulls, geese and larks are among the most frequently reported species involved in strikes, likely due to their prevalence near airports and flight paths.
+
+```{r}
+#| label: fig-wildlife-strikes-by-species
+#| fig-cap: "Top Species Responsible for 75% of Wildlife Strike Incidents"
+#| fig-width: 7
+#| fig-height: 5
+strikes_by_species_top <- faa_wildlife |>
+  count(
+    species,
+    sort = TRUE
+  ) |>
+  mutate(
+    cumsum = cumsum(n),
+    p_tot = cumsum / sum(n)
+  ) |>
+  filter(p_tot <= .75)
+
+faa_wildlife |>
+  filter(species %in% strikes_by_species_top$species) |>
+  ggplot(aes(x = fct_rev(fct_infreq(species)))) +
+  geom_bar(fill = "#00688B") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_number(big.mark = ",")) +
+  labs(
+    title = "Top Species Responsible for 75% of Wildlife Strike Incidents",
+    x = "Species",
     y = "Number of Strikes"
   ) +
   theme_minimal() +

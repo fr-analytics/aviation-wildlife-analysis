@@ -10,12 +10,11 @@ faa_wildlife <- read_csv(
 # cleaning ---------------------------------------------------------------
 
 # clean column names
-faa_wildlife <- faa_wildlife |>
-  janitor::clean_names()
+faa_wildlife <- janitor::clean_names(faa_wildlife)
 
 # exploratory data analysis ----------------------------------------------
 
-# line plot of total wildlife strikes over time
+# viz - line plot of total wildlife strikes over time
 faa_wildlife |>
   group_by(incident_year) |>
   summarise(total_strikes = n()) |>
@@ -35,7 +34,7 @@ faa_wildlife |>
   theme_minimal() +
   theme(panel.grid.minor = element_blank())
 
-# seasonal trend of wildlife strikes by month
+# viz - seasonal trend of wildlife strikes by month
 faa_wildlife |>
   group_by(incident_month, incident_year) |>
   summarise(n = n()) |>
@@ -48,6 +47,33 @@ faa_wildlife |>
   labs(
     title = "Average Number of Wildlife Strike Incidents by Month",
     x = "Month",
+    y = "Number of Strikes"
+  ) +
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank())
+
+# table - top species responsible for 75% of wildlife strikes
+strikes_by_species_top <- faa_wildlife |>
+  count(
+    species,
+    sort = TRUE
+  ) |>
+  mutate(
+    cumsum = cumsum(n),
+    p_tot = cumsum / sum(n)
+  ) |>
+  filter(p_tot <= .75)
+
+# viz - bar plot of top species responsible for wildlife strikes
+faa_wildlife |>
+  filter(species %in% strikes_by_species_top$species) |>
+  ggplot(aes(x = fct_rev(fct_infreq(species)))) +
+  geom_bar(fill = "#00688B") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::label_number(big.mark = ",")) +
+  labs(
+    title = "Top Species Responsible for 75% of Wildlife Strike Incidents",
+    x = "Species",
     y = "Number of Strikes"
   ) +
   theme_minimal() +

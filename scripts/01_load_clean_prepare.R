@@ -10,5 +10,4 @@ faa_wildlife <- read_csv(
 
 
 # cleaning ---------------------------------------------------------------
-faa_wildlife <- faa_wildlife |>
-  janitor::clean_names()
+faa_wildlife <- janitor::clean_names(faa_wildlife)
